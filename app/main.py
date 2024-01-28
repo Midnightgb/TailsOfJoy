@@ -1,6 +1,9 @@
+# app/main.py
 from fastapi import FastAPI
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
+
+from app.api.endpoints import adoption  # Importar las rutas de adopción
 
 app = FastAPI()
 
@@ -13,7 +16,5 @@ templates = Jinja2Templates(directory="templates")
 def read_root(request: Request):
     return templates.TemplateResponse("base.html", {"request": request})
 
-# Importar las rutas de la API
-from app.api.endpoints import adoption
-
+# Incluir las rutas de la API de adopción
 app.include_router(adoption.router, prefix="/adoption", tags=["adoption"])
