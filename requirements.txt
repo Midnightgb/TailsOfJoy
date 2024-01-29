@@ -1,0 +1,12 @@
+fastapi
+jinja2
+python-jose
+sqlalchemy
+uvicorn
+pymysql
+python-multipart
+bcrypt  # for password hashing
+python-dotenv
+itsdangerous
+pillow
+websockets
