@@ -5,7 +5,7 @@ from starlette.requests import Request
 import os
 from dotenv import load_dotenv
 
-from api.endpoints_v1 import adoption  
+from api.endpoints_v1 import adoption
 
 load_dotenv()
 
@@ -16,8 +16,10 @@ app = FastAPI()
 app.mount("/static", StaticFiles(directory="static"), name="static")
 templates = Jinja2Templates(directory="templates")
 
+
 @app.get("/")
 def root(request: Request):
     return templates.TemplateResponse("index.html", {"request": request})
+
 
 app.include_router(adoption.router, prefix="/adoption", tags=["adoption"])

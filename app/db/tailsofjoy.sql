@@ -12,9 +12,10 @@ CREATE TABLE `users` (
 	`country` varchar(60) NOT NULL,
 	`email` varchar(100) NOT NULL,
 	`password` varchar(255) NOT NULL,
+	`role` enum('basic','admin') NOT NULL DEFAULT 'basic',
+	`status` enum('active','inactive','deleted') NOT NULL DEFAULT 'active',
 	`created_at` TIMESTAMP NOT NULL DEFAULT current_timestamp(),
 	`updated_at` TIMESTAMP NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
-	`role` enum('basic','admin') NOT NULL DEFAULT 'basic',
 	PRIMARY KEY (`user_id`)
 );
 

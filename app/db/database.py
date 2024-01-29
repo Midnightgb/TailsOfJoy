@@ -2,6 +2,7 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 import os
 from dotenv import load_dotenv
+import Logger
 
 load_dotenv()
 
@@ -16,10 +17,14 @@ engine = create_engine(DATABASE_URL)
 
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
-
 def get_database():
     database = SessionLocal()
     try:
+        Logger.info("Database connection successful")
         yield database
     finally:
         database.close()
+
+def close_database():
+    Logger.info("Database connection closed")
+    engine.dispose()
