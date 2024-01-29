@@ -1,10 +1,14 @@
-# app/main.py
 from fastapi import FastAPI
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 from starlette.requests import Request
+import os
+from dotenv import load_dotenv
 
-from api.endpoints_v1 import adoption  # Importar las rutas de adopción
+from api.endpoints_v1 import adoption  
+
+load_dotenv()
+
 
 app = FastAPI()
 
@@ -12,10 +16,8 @@ app = FastAPI()
 app.mount("/static", StaticFiles(directory="static"), name="static")
 templates = Jinja2Templates(directory="templates")
 
-# Rutas
 @app.get("/")
 def root(request: Request):
-    return templates.TemplateResponse("base.html", {"request": request})
+    return templates.TemplateResponse("index.html", {"request": request})
 
-# Incluir las rutas de la API de adopción
 app.include_router(adoption.router, prefix="/adoption", tags=["adoption"])
