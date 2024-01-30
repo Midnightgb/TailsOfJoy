@@ -4,11 +4,12 @@ from fastapi.templating import Jinja2Templates
 from starlette.requests import Request
 import os
 from dotenv import load_dotenv
-
+from logger.Logger import Logger
 from api.endpoints_v1 import adoption
 
 load_dotenv()
 
+Logger.info("Starting API")
 
 app = FastAPI()
 
