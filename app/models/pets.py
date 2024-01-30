@@ -1,5 +1,5 @@
 from sqlalchemy import Column, Integer, String, Enum, Date
-from sqlalchemy.orm import declarative_base, relationship
+from sqlalchemy.orm import declarative_base
 from sqlalchemy.sql import func
 from enum import Enum as PyEnum
 
@@ -28,9 +28,3 @@ class Pet(Base):
     photo_url = Column(String(200), nullable=False)
     created_at = Column(Date, server_default=func.now())
     updated_at = Column(Date, server_default=func.now(), onupdate=func.now())
-
-    owner = relationship("User", back_populates="pets")
-    adoptions = relationship("Adoption", back_populates="pet")
-    species = relationship("Species", back_populates="pets")
-    breed = relationship("Breed", back_populates="pets")
-    size = relationship("Size", back_populates="pets")

@@ -1,5 +1,5 @@
 from sqlalchemy import Column, Integer, String, Date
-from sqlalchemy.orm import declarative_base, relationship
+from sqlalchemy.orm import declarative_base
 from sqlalchemy.sql import func
 
 Base = declarative_base()
@@ -11,5 +11,3 @@ class Size(Base):
     size_name = Column(String(20), nullable=False)
     created_at = Column(Date, server_default=func.now())
     updated_at = Column(Date, server_default=func.now(), onupdate=func.now())
-
-    pets = relationship("Pet", back_populates="size")
