@@ -1,5 +1,5 @@
 from sqlalchemy import Column, Integer, String, Enum, Date
-from sqlalchemy.orm import declarative_base, relationship
+from sqlalchemy.orm import declarative_base
 from sqlalchemy.sql import func
 from enum import Enum as PyEnum
 
@@ -30,6 +30,3 @@ class User(Base):
     status = Column(Enum(Status), nullable=False, default=Status.active)
     created_at = Column(Date, server_default=func.now())
     updated_at = Column(Date, server_default=func.now(), onupdate=func.now())
-
-    pets = relationship("Pet", back_populates="owner")
-    adoptions = relationship("Adoption", back_populates="adopter")
