@@ -1,6 +1,6 @@
 from fastapi import APIRouter
 from logger.Logger import Logger
-from db.database import *
+from db.database import get_database, server_status
 from fastapi import Depends
 from sqlalchemy.orm import Session
 from models.models import Pet, Status
@@ -8,7 +8,8 @@ from models.models import Pet, Status
 router = APIRouter()
 
 
-""" @router.get("/list")
+""" 
+@router.get("/list")
 def get_available_pets(
     db: Session = Depends(get_database),
 ):
@@ -26,7 +27,7 @@ def get_available_pets(
 @router.post("/adopt/{pet_id}")
 def adopt_pet(pet_id: int, db: Session = Depends(get_database)):
     Logger.warning("Checking database server status")
-    if not serverStatus(db):
+    if not server_status(db):
         return {
             "status": "false",
             "message": "Database server is down. Please try again later."

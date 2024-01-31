@@ -10,3 +10,4 @@ python-dotenv
 itsdangerous
 pillow
 websockets
+timeout_decorator
