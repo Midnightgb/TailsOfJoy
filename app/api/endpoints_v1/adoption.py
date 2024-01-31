@@ -24,8 +24,8 @@ def get_available_pets(
 """
 
 
-@router.post("/adopt/{pet_id}")
-def adopt_pet(pet_id: int, db: Session = Depends(get_database)):
+@router.post("/adopt/{pet_id}/{user_id}")
+def adopt_pet(pet_id: int, user_id: int, db: Session = Depends(get_database)):
     Logger.warning("Checking database server status")
     if not server_status(db):
         return {
@@ -35,7 +35,7 @@ def adopt_pet(pet_id: int, db: Session = Depends(get_database)):
     try:
         Logger.info(f"Checking if pet with ID {pet_id} exists")
         pet_to_adopt = db.query(Pet).filter(Pet.pet_id == pet_id).first()
-
+        Logger.debug(user_id)
         # Check if pet exists
         if not pet_to_adopt:
             Logger.error(f"Pet with ID {pet_id} not found")
