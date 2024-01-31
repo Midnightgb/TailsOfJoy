@@ -3,7 +3,7 @@ from logger.Logger import Logger
 from db.database import *
 from fastapi import Depends
 from sqlalchemy.orm import Session
-from models.pets import Pet, Status
+from models.models import Pet, Status
 
 router = APIRouter()
 
@@ -25,31 +25,41 @@ def get_available_pets(
 
 @router.post("/adopt/{pet_id}")
 def adopt_pet(pet_id: int, db: Session = Depends(get_database)):
+    Logger.warning("Checking database server status")
     if not serverStatus(db):
         return {
             "status": "false",
             "message": "Database server is down. Please try again later."
         }
-    Logger.success("Pet list retrieved")
-    pet_to_adopt = db.query(Pet).filter(Pet.pet_id == pet_id).first()
-    # This line is added to debug the pet_to_adopt variable
-    Logger.info(pet_to_adopt)
-    # Check if pet exists
-    if not pet_to_adopt:
+    try:
+        Logger.info(f"Checking if pet with ID {pet_id} exists")
+        pet_to_adopt = db.query(Pet).filter(Pet.pet_id == pet_id).first()
+        # This line is added to debug the pet_to_adopt variable
+        Logger.debug(pet_to_adopt)
+        # Check if pet exists
+        if not pet_to_adopt:
+            return {
+                "status": "false",
+                "message": f"Pet with ID {pet_id} not found"}
+        # Check if pet is already adopted
+        if pet_to_adopt.status == Status.adopted or pet_to_adopt.status == Status.inactive or pet_to_adopt.status == Status.deleted or pet_to_adopt.status == Status.pending:
+            return {
+                "status": "false",
+                "message": f"Pet with ID {pet_id} already {pet_to_adopt.status.value}"}
+        
+        pet_to_adopt.status = Status.pending
+        db.commit()
+        Logger.success(f"Pet with ID {pet_id} is now pending for adoption")
+        return {
+            "status": "true",
+            "message": f"Pet with ID {pet_id} is now pending for adoption"
+        }
+    except Exception as e:
+        Logger.error(f"Error adopting pet with ID {pet_id}: {e}")
         return {
             "status": "false",
-            "message": f"Pet with ID {pet_id} not found"}
-    # Check if pet is already adopted
-    if pet_to_adopt.status == Status.adopted or pet_to_adopt.status == Status.inactive or pet_to_adopt.status == Status.deleted or pet_to_adopt.status == Status.pending:
-        return {
-            "status": "false",
-            "message": f"Pet with ID {pet_id} already {pet_to_adopt.status.value}"}
-    
-    pet_to_adopt.status = Status.pending
-    db.commit()
-    Logger.success(f"Pet with ID {pet_id} is now pending for adoption")
-    return {
-        "status": "true",
-        "message": f"Pet with ID {pet_id} is now pending for adoption"
-    }
-    
+            "message": f"Error adopting pet with ID {pet_id}"
+        }
+    finally:
+        db.close()
+
