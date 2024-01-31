@@ -1,6 +1,7 @@
 from sqlalchemy import Column, Integer, String, Date
 from sqlalchemy.orm import declarative_base
 from sqlalchemy.sql import func
+from models import *
 
 Base = declarative_base()
 

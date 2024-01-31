@@ -21,6 +21,8 @@ def get_available_pets(
     available_pets = db.query(Pet).all()
     return {"pets": available_pets}
 """
+
+
 @router.post("/adopt/{pet_id}")
 def adopt_pet(pet_id: int, db: Session = Depends(get_database)):
     if not serverStatus(db):
@@ -30,10 +32,24 @@ def adopt_pet(pet_id: int, db: Session = Depends(get_database)):
         }
     Logger.success("Pet list retrieved")
     pet_to_adopt = db.query(Pet).filter(Pet.pet_id == pet_id).first()
+    # This line is added to debug the pet_to_adopt variable
     Logger.info(pet_to_adopt)
+    # Check if pet exists
     if not pet_to_adopt:
-        return {"message": f"Pet with ID {pet_id} not found"}
-    #if pet_to_adopt.adopted:
-        #return {"message": f"Pet with ID {pet_id} already adopted"}
+        return {
+            "status": "false",
+            "message": f"Pet with ID {pet_id} not found"}
+    # Check if pet is already adopted
+    if pet_to_adopt.status == Status.adopted or pet_to_adopt.status == Status.inactive or pet_to_adopt.status == Status.deleted or pet_to_adopt.status == Status.pending:
+        return {
+            "status": "false",
+            "message": f"Pet with ID {pet_id} already {pet_to_adopt.status.value}"}
     
+    pet_to_adopt.status = Status.pending
+    db.commit()
+    Logger.success(f"Pet with ID {pet_id} is now pending for adoption")
+    return {
+        "status": "true",
+        "message": f"Pet with ID {pet_id} is now pending for adoption"
+    }
     

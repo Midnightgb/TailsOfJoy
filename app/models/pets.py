@@ -2,11 +2,15 @@ from sqlalchemy import Column, Integer, String, Enum, Date, ForeignKey
 from sqlalchemy.orm import declarative_base
 from sqlalchemy.sql import func
 from enum import Enum as PyEnum
+from models import *
+
+
+
 
 Base = declarative_base()
 
-
 class Status(PyEnum):
+    pending = "pending"
     active = "active"
     adopted = "adopted"
     inactive = "inactive"
