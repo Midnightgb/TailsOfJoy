@@ -34,19 +34,21 @@ def adopt_pet(pet_id: int, db: Session = Depends(get_database)):
     try:
         Logger.info(f"Checking if pet with ID {pet_id} exists")
         pet_to_adopt = db.query(Pet).filter(Pet.pet_id == pet_id).first()
-        # This line is added to debug the pet_to_adopt variable
-        Logger.debug(pet_to_adopt)
+
         # Check if pet exists
         if not pet_to_adopt:
+            Logger.error(f"Pet with ID {pet_id} not found")
             return {
                 "status": "false",
                 "message": f"Pet with ID {pet_id} not found"}
+        # This line is added to debug the pet_to_adopt variable
+        Logger.debug(pet_to_adopt)
         # Check if pet is already adopted
         if pet_to_adopt.status == Status.adopted or pet_to_adopt.status == Status.inactive or pet_to_adopt.status == Status.deleted or pet_to_adopt.status == Status.pending:
             return {
                 "status": "false",
                 "message": f"Pet with ID {pet_id} already {pet_to_adopt.status.value}"}
-        
+
         pet_to_adopt.status = Status.pending
         db.commit()
         Logger.success(f"Pet with ID {pet_id} is now pending for adoption")
@@ -61,5 +63,5 @@ def adopt_pet(pet_id: int, db: Session = Depends(get_database)):
             "message": f"Error adopting pet with ID {pet_id}"
         }
     finally:
+        Logger.warning("Closing database connection")
         db.close()
-
