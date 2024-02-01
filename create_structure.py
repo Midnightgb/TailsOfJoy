@@ -3,7 +3,7 @@ import os
 
 def create_project_structure():
     # Definir la estructura de carpetas
-    folders = ['/app', '/app/static', '/app/templates', '/scripts', '/tests', '/app/api','/app/api/endpoints']
+    folders = ['/app', '/app/core', '/app/db', '/app/api', '/app/api/v1', '/app/api/v1/models', '/app/api/v1/routes', '/app/api/v1/schemas', '/app/api/v1/crud', '/app/api/v1/dependencies']
 
     # Crear las carpetas
     for folder in folders:
@@ -18,9 +18,16 @@ def create_project_structure():
     # Crear archivos vacíos
     empty_files = [
         'app/main.py',
-        'app/static/styles.css',
-        'app/static/app.js',
-        'app/templates/index.html'
+        'app/core/__init__.py',
+        'app/db/__init__.py',
+        'app/api/__init__.py',
+        'app/api/v1/__init__.py',
+        'app/api/v1/models/__init__.py',
+        'app/api/v1/routes/__init__.py',
+        'app/api/v1/schemas/__init__.py',
+        'app/api/v1/crud/__init__.py',
+        'app/api/v1/dependencies/__init__.py',
+        'app/api/v1/crud/usuarios.py',
     ]
 
     for file in empty_files:
@@ -36,7 +43,6 @@ def create_project_structure():
                 f'No se pudo crear el archivo {file_path}. Permiso denegado.')
 
     print("Estructura creada exitosamente.")
-
 
 if __name__ == "__main__":
     # Obtener la ruta del script

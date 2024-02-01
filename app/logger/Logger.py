@@ -12,20 +12,23 @@ class Logger:
 
     @staticmethod
     def error(text):
-        print(Logger.COLORS['RED'] + text + Logger.COLORS['RESET'])
+        print(Logger.COLORS['RED'] + str(text) + Logger.COLORS['RESET'])
 
     @staticmethod
     def success(text):
-        print(Logger.COLORS['GREEN'] + text + Logger.COLORS['RESET'])
+        print(Logger.COLORS['GREEN'] + str(text) + Logger.COLORS['RESET'])
 
     @staticmethod
     def warning(text):
-        print(Logger.COLORS['YELLOW'] + text + Logger.COLORS['RESET'])
+        print(Logger.COLORS['YELLOW'] + str(text) + Logger.COLORS['RESET'])
 
     @staticmethod
     def info(text):
-        print(Logger.COLORS['BLUE'] + text + Logger.COLORS['RESET'])
+        print(Logger.COLORS['BLUE'] + str(text) + Logger.COLORS['RESET'])
 
     @staticmethod
     def debug(text):
-        print(Logger.COLORS['MAGENTA'] + text + Logger.COLORS['RESET'])
+        print(Logger.COLORS['MAGENTA'] + str(text) + Logger.COLORS['RESET'])
+
+    def __add__(self, other):
+        return str(self) + str(other)
