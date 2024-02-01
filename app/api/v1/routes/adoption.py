@@ -1,5 +1,5 @@
 from fastapi import APIRouter
-from logger.Logger import Logger
+from app.core.Logger import Logger
 from db.database import get_database, server_status
 from fastapi import Depends
 from sqlalchemy.orm import Session
