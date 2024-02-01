@@ -11,3 +11,4 @@ itsdangerous
 pillow
 websockets
 timeout_decorator
+gunicorn
