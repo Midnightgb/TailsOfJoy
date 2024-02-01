@@ -8,12 +8,12 @@ from app.api.v1.models.models import Pet, Status, User, Adoption
 router = APIRouter()
 
 
-""" 
+
 @router.get("/list")
 def get_available_pets(
     db: Session = Depends(get_database),
 ):
-    if not serverStatus(db):
+    if not server_status(db):
         return {
             "status": "false",
             "message": "Database server status: Database server is down. Please try again later."
@@ -21,7 +21,6 @@ def get_available_pets(
     Logger.success("Pet list retrieved")
     available_pets = db.query(Pet).all()
     return {"pets": available_pets}
-"""
 
 
 @router.post("/adopt/{pet_id}/{user_id}")
