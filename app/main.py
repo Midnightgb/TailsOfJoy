@@ -1,6 +1,4 @@
 from fastapi import FastAPI
-from fastapi.staticfiles import StaticFiles
-from fastapi.templating import Jinja2Templates
 from starlette.requests import Request
 import os
 from dotenv import load_dotenv
@@ -13,14 +11,8 @@ Logger.info("Starting API")
 
 app = FastAPI()
 
-# Configurar archivos estáticos y plantillas
-app.mount("/static", StaticFiles(directory="static"), name="static")
-templates = Jinja2Templates(directory="templates")
-
-
 @app.get("/")
 def root(request: Request):
-    return templates.TemplateResponse("index.html", {"request": request})
-
+    return {"message": "API IS RUNNING"}
 
 app.include_router(adoption.router, prefix="/adoption", tags=["adoption"])
