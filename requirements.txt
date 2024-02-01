@@ -1,5 +1,4 @@
 fastapi
-jinja2
 python-jose
 sqlalchemy
 uvicorn
@@ -10,5 +9,3 @@ python-dotenv
 itsdangerous
 pillow
 websockets
-timeout_decorator
-gunicorn
