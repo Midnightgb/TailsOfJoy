@@ -3,7 +3,7 @@ from logger.Logger import Logger
 from db.database import get_database, server_status
 from fastapi import Depends
 from sqlalchemy.orm import Session
-from models.models import Pet, Status, User, Adoption
+from app.api.v1.models.models import Pet, Status, User, Adoption
 
 router = APIRouter()
 
