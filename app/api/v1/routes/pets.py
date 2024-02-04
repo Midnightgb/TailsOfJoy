@@ -17,8 +17,10 @@ router = APIRouter(
 
 @router.get("/available", status_code=status.HTTP_200_OK)
 def get_available_pets(
-    offset: Optional[int] = Query(default=0, description="Number of results to skip"),
-    limit: Optional[int] = Query(default=20, description="Number of results to return"),
+    offset: Optional[int] = Query(
+        default=0, description="Number of results to skip"),
+    limit: Optional[int] = Query(
+        default=20, description="Number of results to return"),
     size: Optional[str] = Query(None, description="Size of pet"),
     specie: Optional[str] = Query(None, description="Specie of pet"),
     breed: Optional[str] = Query(None, description="Breed of pet"),
@@ -26,11 +28,11 @@ def get_available_pets(
 ):
     if not server_status(db):
         return handle_server_down()
-    
+
     if offset < 0 or limit < 0:
         offset = 0
         limit = 20
-    
+
     query: DBQuery = db.query(Pet).filter(Pet.status == Status.active)
 
     if size is not None:
@@ -41,7 +43,7 @@ def get_available_pets(
 
     if breed is not None:
         query = query.filter(Pet.breed_id == breed)
-    
+
     available_pets = query.offset(offset).limit(limit).all()
 
     if not available_pets:
@@ -59,7 +61,6 @@ def get_available_pets(
             "specie_name": species_info.specie_name,
             "specie_description": species_info.specie_description,
         }
-
 
         breed_info = db.query(
             Breed.breed_id,
@@ -110,8 +111,8 @@ def get_breeds(
     return {"breeds": breeds}
 
 
-@router.post("/adopt/{pet_id}/{user_id}")
-def adopt_pet(pet_id: int, user_id: int, db: Session = Depends(get_database)):
+@router.post("/adopt", status_code=status.HTTP_200_OK, description="Adopt a pet by user ID and pet ID", tags=["pets"])
+def adopt_pet(pet_id: str, user_id: str, db: Session = Depends(get_database)):
     Logger.warning("Checking database server status")
     if not server_status(db):
         return handle_server_down()
