@@ -1,10 +1,6 @@
 from fastapi import FastAPI
-import os
-from dotenv import load_dotenv
-from app.core.Logger import Logger
+from core.Logger import Logger
 from api.v1.routes import adoption
-
-load_dotenv()
 
 Logger.info("Starting API")
 

@@ -1,34 +1,27 @@
 from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker
-import os
-from app.core.Logger import Logger
+from sqlalchemy.orm import sessionmaker, declarative_base
+from .Logger import Logger
 from sqlalchemy.exc import OperationalError
 from sqlalchemy.sql import text
-from sqlalchemy.ext.declarative import declarative_base
-from dotenv import load_dotenv
+from core.config import get_settings
 
-load_dotenv()
 
-DB_USER = os.getenv("DB_USER")
-DB_PASSWORD = os.getenv("DB_PASSWORD")
-DB_HOST = os.getenv("DB_HOST")
-DB_NAME = os.getenv("DB_NAME")
-
-if DB_PASSWORD:
-    DATABASE_URL = f"mysql+pymysql://{DB_USER}:{DB_PASSWORD}@{DB_HOST}/{DB_NAME}"
-else:
-    DATABASE_URL = f"mysql+pymysql://{DB_USER}@{DB_HOST}/{DB_NAME}"
-
-Logger.debug(f"Database URL: {DATABASE_URL}")
-
-engine = create_engine(DATABASE_URL)
+Logger.info("Database connection in progress...")
+settings = get_settings()
+engine = create_engine(
+    settings.DATABASE_URL,
+    pool_pre_ping=True,
+    pool_recycle=300,
+    pool_size=5,
+    max_overflow=0
+)
 
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
 Base = declarative_base()
 
 
-def get_database():
+def get_database() -> GeneratorExit:
     database = SessionLocal()
     try:
         Logger.success("Database connection successful")

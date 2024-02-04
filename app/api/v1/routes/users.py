@@ -2,7 +2,7 @@ from fastapi import FastAPI, HTTPException, Depends, status
 from sqlalchemy.orm import Session
 from schemas import UserCreate, User
 from crud.usuarios import create_user
-from db.database import get_database
+from app.core.database import get_database
 
 app = FastAPI()
 
