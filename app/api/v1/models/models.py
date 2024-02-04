@@ -77,6 +77,9 @@ class Species(Base):
     created_at = Column(Date, server_default=func.now())
     updated_at = Column(Date, server_default=func.now(), onupdate=func.now())
 
+    def __repr__(self):
+        return f"<Species(specie_id={self.specie_id}, specie_name={self.specie_name}, specie_description={self.specie_description}, created_at={self.created_at}, updated_at={self.updated_at})>"
+
 
 class Size(Base):
     __tablename__ = "sizes"
