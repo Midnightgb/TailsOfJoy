@@ -4,8 +4,16 @@ sqlalchemy
 uvicorn
 pymysql
 python-multipart
-bcrypt  # for password hashing
+bcrypt
 python-dotenv
 itsdangerous
 pillow
 websockets
+passlib
+pydantic[email]
+
+
+
+
+
+
