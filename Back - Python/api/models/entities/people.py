@@ -1,4 +1,4 @@
-from sqlalchemy import Column, String, Integer, BigInteger, TIMESTAMP
+from sqlalchemy import Column, String, BigInteger, TIMESTAMP
 from api.models.base_class import Base
 
 class People(Base):

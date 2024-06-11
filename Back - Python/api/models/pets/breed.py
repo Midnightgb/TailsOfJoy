@@ -1,5 +1,4 @@
-from sqlalchemy import Column, String, TIMESTAMP, Float, Integer, ForeignKey
-from sqlalchemy.orm import relationship
+from sqlalchemy import Column, String, TIMESTAMP
 from api.models.base_class import Base
 
 class Breed(Base):

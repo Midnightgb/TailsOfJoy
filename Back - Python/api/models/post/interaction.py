@@ -1,6 +1,8 @@
 from sqlalchemy import Column, String, Date, TIMESTAMP, ForeignKey
 from sqlalchemy.orm import relationship
 from api.models.base_class import Base
+from api.models.post.post import Post
+from api.models.entities.user import User
 
 class Interaction(Base):
     __tablename__ = 'interactions'
@@ -11,3 +13,6 @@ class Interaction(Base):
     date = Column(Date, nullable=False)
     created_at = Column(TIMESTAMP, nullable=False, server_default='CURRENT_TIMESTAMP')
     updated_at = Column(TIMESTAMP, nullable=False, server_default='CURRENT_TIMESTAMP', onupdate='CURRENT_TIMESTAMP')
+    
+    user = relationship('User', back_populates='interactions')
+    post = relationship('Post', back_populates='interactions')
