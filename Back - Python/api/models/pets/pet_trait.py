@@ -2,7 +2,7 @@ from sqlalchemy import Column, String, TIMESTAMP, Float, Integer, ForeignKey
 from sqlalchemy.orm import relationship
 from api.models.base_class import Base
 
-class PetTrait(Base):
+class Pet_trait(Base):
     __tablename__ = 'pet_traits'
 
     traits_id = Column(String(255), primary_key=True)

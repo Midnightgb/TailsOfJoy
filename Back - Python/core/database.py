@@ -8,6 +8,7 @@ from core.config import get_settings
 
 Logger.info("Database connection in progress...")
 settings = get_settings()
+Logger.info(settings.DATABASE_URL)
 engine = create_engine(
     settings.DATABASE_URL,
     pool_pre_ping=True,

@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 from core.Logger import Logger
-from api.v1.routes import pets
+#from api.v1.routes import pets
 
 Logger.info("Starting API")
 
@@ -12,4 +12,4 @@ def root():
     return {"status": "true", "message": "API is running"}
 
 
-app.include_router(pets.router)
+#app.include_router(pets.router)

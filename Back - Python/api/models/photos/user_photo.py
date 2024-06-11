@@ -1,12 +1,10 @@
-from sqlalchemy import Column, String, TIMESTAMP, ForeignKey
-from sqlalchemy.orm import relationship
+from sqlalchemy import Column, String, TIMESTAMP
 from api.models.base_class import Base
 
-class PetPhoto(Base):
-    __tablename__ = 'pet_photos'
+class User_photo(Base):
+    __tablename__ = 'user_photos'
 
-    id_pet_photo = Column(String(255), primary_key=True)
-    pet_id = Column(String(255), ForeignKey('pets.pet_id'), nullable=False)
+    id_user_photo = Column(String(255), primary_key=True)
     photo_url = Column(String(255), nullable=False)
     created_at = Column(TIMESTAMP, nullable=False, server_default='CURRENT_TIMESTAMP')
     updated_at = Column(TIMESTAMP, nullable=False, server_default='CURRENT_TIMESTAMP', onupdate='CURRENT_TIMESTAMP')

@@ -3,6 +3,7 @@ from pathlib import Path
 from dotenv import load_dotenv
 from urllib.parse import quote_plus
 from pydantic_settings import BaseSettings
+from Logger import Logger
 
 env_path = Path(".") / ".env"
 load_dotenv(dotenv_path=env_path)
