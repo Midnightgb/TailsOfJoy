@@ -1,6 +1,7 @@
 from fastapi import FastAPI
 from core.Logger import Logger
 #from api.v1.routes import pets
+from api.routes import health_checker
 
 Logger.info("Starting API")
 
@@ -13,3 +14,4 @@ def root():
 
 
 #app.include_router(pets.router)
+app.include_router(health_checker.router)

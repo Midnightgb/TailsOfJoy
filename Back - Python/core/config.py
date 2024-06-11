@@ -3,7 +3,7 @@ from pathlib import Path
 from dotenv import load_dotenv
 from urllib.parse import quote_plus
 from pydantic_settings import BaseSettings
-from Logger import Logger
+from .Logger import Logger
 
 env_path = Path(".") / ".env"
 load_dotenv(dotenv_path=env_path)
@@ -15,7 +15,7 @@ class Settings(BaseSettings):
     DB_NAME: str = os.getenv("DB_NAME")
     DB_HOST: str = os.getenv("DB_HOST")
     DB_PORT: str = os.getenv("DB_PORT")
-    DATABASE_URL: str = f"mysql+pymysql://{DB_USER}:%s@{DB_HOST}:{DB_PORT}/{DB_NAME}" % quote_plus(
+    DATABASE_URL: str = f"postgresql+psycopg2://{DB_USER}:%s@{DB_HOST}:{DB_PORT}/{DB_NAME}" % quote_plus(
         DB_PASS)
 
 

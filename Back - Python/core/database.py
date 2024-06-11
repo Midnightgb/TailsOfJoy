@@ -3,7 +3,7 @@ from sqlalchemy.orm import sessionmaker, declarative_base
 from .Logger import Logger
 from sqlalchemy.exc import OperationalError
 from sqlalchemy.sql import text
-from core.config import get_settings
+from .config import get_settings
 
 
 Logger.info("Database connection in progress...")
