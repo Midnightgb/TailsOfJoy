@@ -1,4 +1,5 @@
 from sqlalchemy import Column, String, BigInteger, TIMESTAMP
+from sqlalchemy.orm import relationship
 from api.models.base_class import Base
 
 class People(Base):
@@ -12,3 +13,5 @@ class People(Base):
     phone = Column(BigInteger, nullable=False)
     created_at = Column(TIMESTAMP, nullable=False, server_default='CURRENT_TIMESTAMP')
     updated_at = Column(TIMESTAMP, nullable=False, server_default='CURRENT_TIMESTAMP', onupdate='CURRENT_TIMESTAMP')
+    
+    users = relationship("User", back_populates="person")
