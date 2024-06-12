@@ -9,7 +9,7 @@ from core.security import create_access_token, verify_token
 # API dependencies
 #from api.v1.schemas.user import UserRead, UserCreate, Token
 from api.crud.users import get_users, authenticate_user
-from api.schemas.entities.user import UserRead
+from api.schemas.entities.user import User_read
 
 router = APIRouter(
     prefix="/api/v1/users",
@@ -36,7 +36,7 @@ async def authenticate_and_provide_access_token(
         data={"sub": user.user_id, "role": user.id_role})
     return {"access_token": access_token_expires, "token_type": "bearer"}
 
-@router.get("/", response_model=list[UserRead])
+@router.get("/", response_model=list[User_read])
 async def get_all_users(db: Session = Depends(get_database)):
     if not server_status(db):
         return handle_server_down()
