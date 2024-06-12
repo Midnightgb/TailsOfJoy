@@ -4,11 +4,12 @@ from sqlalchemy.orm import Session
 # Core dependencies
 from core.database import get_database, server_status
 from core.Logger import Logger
-from core.utils import handle_server_down
+from core.utils.utils import handle_server_down
 from core.security import create_access_token, verify_token
 # API dependencies
 #from api.v1.schemas.user import UserRead, UserCreate, Token
 from api.crud.users import get_users, authenticate_user
+from api.schemas.entities.user import UserRead
 
 router = APIRouter(
     prefix="/api/v1/users",
@@ -19,7 +20,7 @@ router = APIRouter(
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/api/v1/users/login")
 
 @router.post("/login", response_model=dict)#change to Token when the schema is created
-async def login_for_access_token(
+async def authenticate_and_provide_access_token(
         form_data: OAuth2PasswordRequestForm = Depends(),
         db: Session = Depends(get_database)):
     if not server_status(db):
@@ -34,3 +35,9 @@ async def login_for_access_token(
     access_token_expires = create_access_token(
         data={"sub": user.user_id, "role": user.id_role})
     return {"access_token": access_token_expires, "token_type": "bearer"}
+
+@router.get("/", response_model=list[UserRead])
+async def get_all_users(db: Session = Depends(get_database)):
+    if not server_status(db):
+        return handle_server_down()
+    return get_users(db)

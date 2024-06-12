@@ -7,7 +7,7 @@ from api.models.entities.user import User
 
 from core.database import server_status
 from core.Logger import Logger
-from core.utils import handle_server_down, generate_user_id
+from core.utils.utils import handle_server_down, generate_user_id
 from core.security import get_hashed_password, verify_password
 
 def get_users(db: Session):
@@ -17,7 +17,7 @@ def get_users(db: Session):
         users = db.query(User).all()
         return users
     except Exception as e:
-        Logger.error(f"Error getting users: {str(e)}", file=sys.stderr)
+        Logger.error(f"Error getting users: {str(e)}")
         raise HTTPException(
             status_code=500, detail=f"Error al obtener los usuarios: {str(e)}")
 
