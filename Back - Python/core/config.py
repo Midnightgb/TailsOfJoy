@@ -23,7 +23,7 @@ class Settings(BaseSettings):
         DB_PASS)
 
     SECRET_KEY: str = os.getenv("SECRET_KEY")
-    TOKEN_EXPIRE_MINUTES = 30
+    TOKEN_EXPIRE_MINUTES: int = os.getenv("TOKEN_EXPIRE_MINUTES")
     ALGORITHM: str = os.getenv("ALGORITHM")
 
 def get_settings() -> Settings:
