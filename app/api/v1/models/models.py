@@ -71,14 +71,14 @@ class Pet(Base):
 class Species(Base):
     __tablename__ = "species"
 
-    specie_id = Column(Integer, primary_key=True, index=True)
-    specie_name = Column(String(20), nullable=False)
-    specie_description = Column(String(60), nullable=False)
+    species_id = Column(Integer, primary_key=True, index=True)
+    species_name = Column(String(20), nullable=False)
+    species_description = Column(String(60), nullable=False)
     created_at = Column(Date, server_default=func.now())
     updated_at = Column(Date, server_default=func.now(), onupdate=func.now())
 
     def __repr__(self):
-        return f"<Species(specie_id={self.specie_id}, specie_name={self.specie_name}, specie_description={self.specie_description}, created_at={self.created_at}, updated_at={self.updated_at})>"
+        return f"<Species(species_id={self.species_id}, species_name={self.species_name}, species_description={self.species_description}, created_at={self.created_at}, updated_at={self.updated_at})>"
 
 
 class Size(Base):

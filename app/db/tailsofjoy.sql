@@ -57,12 +57,12 @@ CREATE TABLE `breeds` (
 );
 
 CREATE TABLE `species` (
-	`specie_id` INT NOT NULL AUTO_INCREMENT,
-	`specie_name` varchar(20) NOT NULL,
-	`specie_description` varchar(60) NOT NULL,
+	`species_id` INT NOT NULL AUTO_INCREMENT,
+	`species_name` varchar(20) NOT NULL,
+	`species_description` varchar(60) NOT NULL,
 	`created_at` TIMESTAMP NOT NULL DEFAULT current_timestamp(),
 	`updated_at` TIMESTAMP NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
-	PRIMARY KEY (`specie_id`)
+	PRIMARY KEY (`species_id`)
 );
 
 CREATE TABLE `sizes` (
@@ -75,7 +75,7 @@ CREATE TABLE `sizes` (
 
 ALTER TABLE `pets` ADD CONSTRAINT `pets_fk0` FOREIGN KEY (`registered_by`) REFERENCES `users`(`user_id`);
 
-ALTER TABLE `pets` ADD CONSTRAINT `pets_fk1` FOREIGN KEY (`species_id`) REFERENCES `species`(`specie_id`);
+ALTER TABLE `pets` ADD CONSTRAINT `pets_fk1` FOREIGN KEY (`species_id`) REFERENCES `species`(`species_id`);
 
 ALTER TABLE `pets` ADD CONSTRAINT `pets_fk2` FOREIGN KEY (`breed_id`) REFERENCES `breeds`(`breed_id`);
 
