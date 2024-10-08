@@ -1,21 +1,45 @@
 # TailsOfJoy
+
 ## Description
+
 Tails of Joy is a web application that allows users to search for adoptable pets in their area. Users can search animal type, and breed. Users can also save pets to their favorites list and view more information about each pet.
+
 ## Table of Contents
+
 * [Installation](#installation)
 * [Usage](#usage)
 * [License](#license)
 * [Questions](#questions)
+
 ## Installation
+
 To install necessary dependencies, run the following command:
 
-## Install NodeJS dependencies
-you need to be in the app directory to run the following commands
+## Create a virtual environment
+
 ```bash
-npm install
+python -m venv venv
 ```
 
-## Run TailwindCSS
+## Activate the virtual environment
+
 ```bash
-npx tailwindcss -i ./public/dist/css/tailwind/input.css -o ./public/dist/css/tailwind/output.css --watch
+source venv/bin/activate
 ```
+
+## Install Python dependencies
+
+```bash
+pip install -r requirements.txt
+```
+
+## Run the application
+
+```bash
+python app/main.py
+```
+or
+```bash
+uvicorn app.main:app --reload
+```
+
